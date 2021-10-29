@@ -557,8 +557,9 @@ let allClasses = [
 
 class Registration {
   func registerClasses() {
+    let context = JSContext.current()!
+
     for className in allClasses {
-      let context = JSContext.current()!
       context.bridgeClass(className);
     }
 
