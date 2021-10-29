@@ -1,6 +1,6 @@
 import AppKit
 import JavaScriptCore
-import VueKitBridge
+import FrameworkBridge
 
 let allClasses = [
   "AVAsset",

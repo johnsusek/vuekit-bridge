@@ -1,6 +1,5 @@
 import AppKit
 import JavaScriptCore
-import VueKitBridge
 
 public class BridgeTender {
   static var current: BridgeTender! // Used in JSOverridableView.drawOverride
