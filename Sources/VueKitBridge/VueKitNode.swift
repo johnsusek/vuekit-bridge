@@ -18,7 +18,7 @@ enum DelegateHandlerError: Error {
   func destroy()
 }
 
-@objc public class VueKitNode: NSObject, VueKitNodeJSExport, NSTableViewDelegate, NSTableViewDataSource  {
+@objc(VueKitNode) public class VueKitNode: NSObject, VueKitNodeJSExport, NSTableViewDelegate, NSTableViewDataSource  {
   var instance: NSObject?
   var props: JSManagedValue!
   var emitEvent: JSManagedValue
