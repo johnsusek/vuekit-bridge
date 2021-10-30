@@ -11,7 +11,7 @@ public class BridgeTender {
     self.context = context
     BridgeTender.current = self
 
-    let registration = Registration()
+    let registration = Registration(context: context)
     registration.registerClasses()
 
     context.exceptionHandler = BridgeTender.contextExceptionHandler

@@ -556,9 +556,13 @@ let allClasses = [
 ]
 
 class Registration {
-  func registerClasses() {
-    let context = JSContext.current()!
+  var context: JSContext!
 
+  init(context: JSContext) {
+    self.context = context
+  }
+
+  func registerClasses() {
     for className in allClasses {
       context.bridgeClass(className);
     }
