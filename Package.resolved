@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "FrameworkBridge",
+        "repositoryURL": "https://github.com/johnsusek/framework-bridge.git",
+        "state": {
+          "branch": "master",
+          "revision": "550be2faab0a292c69925001a76bfc4493a599c4",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

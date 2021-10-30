@@ -10,8 +10,14 @@ let package = Package(
     products: [
         .library(name: "VueKitBridge", targets: ["VueKitBridge"])
     ],
-    dependencies: [],
+    dependencies: [
+        .package(
+            name: "FrameworkBridge",
+            url: "https://github.com/johnsusek/framework-bridge.git",
+            .branch("master")
+        )
+    ],
     targets: [
-        .target(name: "VueKitBridge", dependencies: [])
+        .target(name: "VueKitBridge", dependencies: ["FrameworkBridge"])
     ]
 )
