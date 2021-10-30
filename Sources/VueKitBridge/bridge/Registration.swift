@@ -401,9 +401,9 @@ class Registration {
 
   func registerClasses() {
     for className in allClasses {
-      context.bridgeClass(className);
+      _ = context.bridgeClass(className);
     }
 
-    context.bridgeClass("VueKitNode");
+    _ = context.bridgeClass("VueKitNode");
   }
 }
