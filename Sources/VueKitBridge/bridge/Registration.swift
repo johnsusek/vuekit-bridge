@@ -394,6 +394,62 @@ let allClasses = [
   "NSVisualEffectView"
 ]
 
+let subclassed = [
+  "AVPlayerView",
+  "IKCameraDeviceView",
+  "IKDeviceBrowserView",
+  "IKFilterBrowserView",
+  "IKFilterUIView",
+  "IKImageView",
+  "IKScannerDeviceView",
+  "NSBox",
+  "NSBrowser",
+  "NSButton",
+  "NSClipView",
+  "NSCollectionView",
+  "NSColorWell",
+  "NSComboBox",
+  "NSDatePicker",
+  "NSGridView",
+  "NSImageView",
+  "NSLevelIndicator",
+  "NSMatrix",
+  "NSOutlineView",
+  "NSPathControl",
+  "NSPopUpButton",
+  "NSPredicateEditor",
+  "NSProgressIndicator",
+  "NSRuleEditor",
+  "NSRulerView",
+  "NSScroller",
+  "NSScrollView",
+  "NSScrubber",
+  "NSScrubberArrangedView",
+  "NSScrubberImageItemView",
+  "NSScrubberTextItemView",
+  "NSSearchField",
+  "NSSecureTextField",
+  "NSSegmentedControl",
+  "NSSlider",
+  "NSSplitView",
+  "NSStackView",
+  "NSStatusBarButton",
+  "NSStepper",
+  "NSSwitch",
+  "NSTableCellView",
+  "NSTableHeaderView",
+  "NSTableRowView",
+  "NSTableView",
+  "NSTabView",
+  "NSText",
+  "NSTextField",
+  "NSTextView",
+  "NSTokenField",
+  "NSVisualEffectView",
+  "QLPreviewView",
+  "QuartzFilterView"
+]
+
 class Registration {
   var context: JSContext!
 
@@ -403,6 +459,11 @@ class Registration {
 
   func registerClasses() {
     for className in allClasses {
+      if subclassed.contains(className) {
+        let subclassName = String(className.dropFirst(2))
+        _ = context.bridgeClass(subclassName);
+      }
+
       _ = context.bridgeClass(className);
     }
 
