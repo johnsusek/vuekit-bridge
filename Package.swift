@@ -15,9 +15,20 @@ let package = Package(
             name: "FrameworkBridge",
             url: "https://github.com/johnsusek/framework-bridge.git",
             .branch("master")
+        ),
+        .package(
+            name: "SwiftyJSON",
+            url: "https://github.com/SwiftyJSON/SwiftyJSON.git",
+            .branch("master")
         )
     ],
     targets: [
-        .target(name: "VueKitBridge", dependencies: ["FrameworkBridge"])
+        .target(
+            name: "VueKitBridge",
+            dependencies: ["FrameworkBridge", "SwiftyJSON"],
+            resources: [
+                .process("Resources")
+            ]
+        )
     ]
 )
