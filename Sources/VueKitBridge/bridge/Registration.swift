@@ -32,6 +32,7 @@ class Registration {
       }
     }
 
+    _ = context.setObject(DispatchQueue.self, forKeyedSubscript: "DispatchQueue" as (NSCopying & NSObjectProtocol)?)
     _ = context.bridgeClass("VueKitNode");
   }
 }
