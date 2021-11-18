@@ -25,6 +25,7 @@ enum DelegateHandlerError: Error {
   var emitAction: JSManagedValue
 
   var children: [VueKitNode]
+  var delegate: JSDelegate?
 
   // MARK: - Static
 
@@ -53,14 +54,14 @@ enum DelegateHandlerError: Error {
     }
 
     if let textField = instance as? NSTextField {
-      let delegate = TextFieldDelegate(node: self)
-      textField.delegate = delegate
+      delegate = TextFieldDelegate(node: self)
+      textField.delegate = delegate as? NSTextFieldDelegate
     }
 
     if let tableView = instance as? NSTableView {
-      let delegate = TableViewDelegate(node: self)
-      tableView.delegate = delegate
-      tableView.dataSource = delegate
+      delegate = TableViewDelegate(node: self)
+      tableView.delegate = delegate as? NSTableViewDelegate
+      tableView.dataSource = delegate as? NSTableViewDataSource
     }
   }
 

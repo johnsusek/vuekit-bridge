@@ -4,7 +4,6 @@ import JavaScriptCore
 class JSDelegate: NSObject {
   let node: VueKitNode
   var viewName: String { "" }
-  // TODO pass context instead of using .current
   let jsFunction = BridgeTender.current.context.evaluateScript("Function")!
 
   init(node: VueKitNode) {
@@ -23,7 +22,7 @@ class JSDelegate: NSObject {
     }
 
     guard let responds = node.props.value?.hasProperty(callbackName) else {
-      print("node.props.value false!")
+      print("[bridge:delegate] node.props.value false!")
       return false
     }
 
