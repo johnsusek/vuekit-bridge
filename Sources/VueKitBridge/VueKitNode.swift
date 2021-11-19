@@ -3,6 +3,7 @@ import JavaScriptCore
 
 enum DelegateHandlerError: Error {
   case missingJSHandler
+  case missingNodeProps
 }
 
 @objc protocol VueKitNodeJSExport: JSExport {
