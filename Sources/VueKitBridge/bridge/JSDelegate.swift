@@ -43,7 +43,8 @@ class JSDelegate: NSObject {
   }
 
   func callJSDelegate(_ propName: String, _ args: [Any]) throws -> JSValue? {
-    if (node.props == nil) {
+    if (node.props.value == nil) {
+      print("[bridge:delegate] Error: node.props.value == nil!", node)
       throw DelegateHandlerError.missingNodeProps
     }
 
