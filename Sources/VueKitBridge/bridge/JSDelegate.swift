@@ -22,7 +22,7 @@ class JSDelegate: NSObject {
     }
 
     guard let responds = node.props.value?.hasProperty(callbackName) else {
-      print("[bridge:delegate] node.props.value false!")
+      print("[bridge:delegate] node.props.value false!", node)
       return false
     }
 
