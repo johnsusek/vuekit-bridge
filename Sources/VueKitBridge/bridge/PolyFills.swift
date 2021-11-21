@@ -14,8 +14,8 @@ class PolyFills {
   }
 
   func install() {
-    context.globalObject.setValue(setTimeout.self, forProperty: "setTimeout")
-    context.globalObject.setValue(clearTimeout.self, forProperty: "clearTimeout")
+    // context.globalObject.setValue(setTimeout.self, forProperty: "setTimeout")
+    // context.globalObject.setValue(clearTimeout.self, forProperty: "clearTimeout")
     context.setObject(VueKitLog, forKeyedSubscript: "VueKitLog" as (NSCopying & NSObjectProtocol)?)
   }
 
@@ -23,35 +23,35 @@ class PolyFills {
     print("[js:" + level + "]", objectToLog.toObject()! as Any)
   }
 
-  var setTimeout: @convention(block) (JSValue, JSValue, JSValue) -> JSValue {
-    return {
-      fn, timeout, args in
+  // var setTimeout: @convention(block) (JSValue, JSValue, JSValue) -> JSValue {
+  //   return {
+  //     fn, timeout, args in
 
-      let interval = timeout.toNumber().doubleValue / 1000
-      let id = Int32.random(in: 0...Int32.max)
+  //     let interval = timeout.toNumber().doubleValue / 1000
+  //     let id = Int32.random(in: 0...Int32.max)
 
-      let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
-        fn.call(withArguments: [args as Any])
-        self.timers.removeValue(forKey: id)
-      }
+  //     let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
+  //       fn.call(withArguments: [args as Any])
+  //       self.timers.removeValue(forKey: id)
+  //     }
 
-      self.timers[id] = timer
+  //     self.timers[id] = timer
 
-      return JSValue(int32: id, in: self.context!)
-    }
-  }
+  //     return JSValue(int32: id, in: self.context!)
+  //   }
+  // }
 
-  var clearTimeout: @convention(block) (JSValue) -> Void {
-    return {
-      value in
+  // var clearTimeout: @convention(block) (JSValue) -> Void {
+  //   return {
+  //     value in
 
-      let id = value.toInt32()
-      let timer = self.timers[id]
+  //     let id = value.toInt32()
+  //     let timer = self.timers[id]
 
-      if timer != nil {
-        timer!.invalidate()
-        self.timers.removeValue(forKey: id)
-      }
-    }
-  }
+  //     if timer != nil {
+  //       timer!.invalidate()
+  //       self.timers.removeValue(forKey: id)
+  //     }
+  //   }
+  // }
 }
