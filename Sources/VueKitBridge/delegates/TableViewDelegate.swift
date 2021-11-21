@@ -3,6 +3,11 @@ import AppKit
 class TableViewDelegate: JSDelegate, NSTableViewDelegate, NSTableViewDataSource {
   override var viewName: String { "tableView" }
 
+  func tableViewSelectionDidChange(_ notification: Notification) {
+    let sel = selectorToCallbackName(Selector("tableViewSelectionDidChange:"))
+    try? self.handleDelegateInJS(sel, [notification as Any]) as Any?
+  }
+
   func numberOfRows(in tableView: NSTableView) -> Int {
     let sel = selectorToCallbackName(Selector("numberOfRowsInTableView:"))
     return try! self.handleDelegateInJS(sel, [tableView]) as Int

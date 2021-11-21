@@ -47,6 +47,9 @@ class Events {
       guard let view = event.window?.contentView?.hitTest(point) else { return event }
       guard let viewNode = VueKitNode.Nodes[view] else { return event }
 
+      // TODO: check the node props here before sending to JS and doing the check there
+      //   if (typeof node.props?.[propName] !== 'function') return;
+
       var payload: [String: Any] = [:]
       payload["type"] = event.type.rawValue
       viewNode.emitEvent.value.call(withArguments: [viewNode, event, "\(event)"])
