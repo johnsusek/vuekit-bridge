@@ -97,8 +97,8 @@ class JSDelegate: NSObject {
       selString = selString.replacingOccurrences(of: capitalizedViewName + ":", with: "")
     }
 
-    if (selString.hasPrefix(self.viewName + ":")) {
-      selString = selString.replacingOccurrences(of: self.viewName + ":", with: "")
+    if (selString.hasPrefix(self.viewName)) {
+      selString = selString.replacingOccurrences(of: self.viewName, with: "")
     }
 
     let selector = "on" + selString
