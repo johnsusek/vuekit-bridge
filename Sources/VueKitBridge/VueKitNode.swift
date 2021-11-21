@@ -49,6 +49,8 @@ enum DelegateHandlerError: Error {
 
     VueKitNode.Nodes[instance] = self
 
+    BridgeTender.current.context.virtualMachine.addManagedReference(self.props, withOwner: self)
+
     if let control = instance as? NSControl {
       control.target = self
       control.action = #selector(self.action)
@@ -69,6 +71,8 @@ enum DelegateHandlerError: Error {
   // MARK: - Instance Methods
 
   @objc func destroy() {
+    BridgeTender.current.context.virtualMachine.removeManagedReference(self.props, withOwner: self)
+
     if (self.instance != nil) {
       VueKitNode.Nodes.removeValue(forKey: self.instance!)
     }
