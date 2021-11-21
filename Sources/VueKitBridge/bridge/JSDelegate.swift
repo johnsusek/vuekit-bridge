@@ -75,7 +75,7 @@ class JSDelegate: NSObject {
 
     // print("[bridge:delegate] Responded \(delegatePropName):", res!)
 
-    let responseObject = res!.toObject()! as! T
+    let responseObject = res?.toObject()! as! T
     return responseObject
   }
 
