@@ -57,7 +57,7 @@ class JSDelegate: NSObject {
     return fn.call(withArguments: args + [self.node, self] )
   }
 
-  func handleDelegateInJS<T>(_ delegatePropName: String, _ args: [Any]) throws -> T {
+  func handleDelegateInJS<T>(_ delegatePropName: String, _ args: [Any]) throws -> T? {
     // This is a force-try, ultimately, because it is unknowable what to return
     // from unimplemented-in-js delegates. Working backwards from this fact, we must throw
     // in our VueKitNode delegate extension functions, since we can't know what to return.
@@ -75,7 +75,7 @@ class JSDelegate: NSObject {
 
     // print("[bridge:delegate] Responded \(delegatePropName):", res!)
 
-    let responseObject = res?.toObject()! as! T
+    let responseObject = res?.toObject()! as? T
     return responseObject
   }
 
