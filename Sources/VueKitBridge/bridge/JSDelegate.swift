@@ -22,7 +22,7 @@ class JSDelegate: NSObject {
     }
 
     guard let responds = node.props.value?.hasProperty(callbackName) else {
-      print("[bridge:delegate] node.props.value false!", node)
+      NSLog("[bridge:delegate] node.props.value false!", node)
       return false
     }
 
@@ -33,18 +33,18 @@ class JSDelegate: NSObject {
     let callbackValue = node.props.value.forProperty(callbackName)!
 
     if (!callbackValue.isInstance(of: jsFunction)) {
-      print("[bridge:delegate] Error: \(callbackName) is not a function!")
+      NSLog("[bridge:delegate] Error: \(callbackName) is not a function!")
       return false
     }
 
-    print("[bridge:delegate] Found \(callbackName) for (\(selector))")
+    NSLog("[bridge:delegate] Found \(callbackName) for (\(selector))")
 
     return true
   }
 
   func callJSDelegate(_ propName: String, _ args: [Any]) throws -> JSValue? {
     if (node.props.value == nil) {
-      print("[bridge:delegate] Error: node.props.value == nil! for propName: ", propName)
+      NSLog("[bridge:delegate] Error: node.props.value == nil! for propName: ", propName)
       throw DelegateHandlerError.missingNodeProps
     }
 
@@ -73,7 +73,7 @@ class JSDelegate: NSObject {
 
     let res = try! self.callJSDelegate(delegatePropName, args)
 
-    // print("[bridge:delegate] Responded \(delegatePropName):", res!)
+    // NSLog("[bridge:delegate] Responded \(delegatePropName):", res!)
 
     return res!.toObject() as! T
   }

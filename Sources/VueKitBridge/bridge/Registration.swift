@@ -12,17 +12,17 @@ class Registration {
 
   func registerClasses() {
     guard let frameworkFileUrl = Bundle.main.url(forResource: "classesToRegister", withExtension: "json") else {
-      print("Could not load classesToRegister.json")
+      NSLog("Could not load classesToRegister.json")
       exit(1)
     }
 
     guard let frameworkData = try? Data(contentsOf: frameworkFileUrl) else {
-      print("Could not load data at \(frameworkFileUrl)")
+      NSLog("Could not load data at \(frameworkFileUrl)")
       exit(1)
     }
 
     guard let frameworks = try? JSON(data: frameworkData) else {
-      print("Could not parse JSON")
+      NSLog("Could not parse JSON")
       exit(1)
     }
 

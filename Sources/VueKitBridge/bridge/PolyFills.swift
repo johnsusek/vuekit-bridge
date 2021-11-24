@@ -20,7 +20,7 @@ class PolyFills {
   }
 
   var VueKitLog: @convention(block) (String, JSValue) -> Void = { level, objectToLog in
-    print("[js:" + level + "]", objectToLog.toObject()! as Any)
+    NSLog("[js:" + level + "] \(objectToLog)")
   }
 
   // var setTimeout: @convention(block) (JSValue, JSValue, JSValue) -> JSValue {

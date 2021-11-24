@@ -39,8 +39,10 @@ class Events {
     .changeMode
   ]
 
-  func startMonitoring() {
-    NSEvent.addLocalMonitorForEvents(matching: Events.eventsToMonitor) {
+  static var monitor: Any?
+
+  static func startMonitoring() {
+    monitor = NSEvent.addLocalMonitorForEvents(matching: Events.eventsToMonitor) {
       event in
 
       let point = event.locationInWindow
@@ -48,6 +50,7 @@ class Events {
       guard let viewNode = VueKitNode.Nodes[view] else { return event }
 
       // TODO: check the node props here before sending to JS and doing the check there
+      // need to port event name -> callback name logic from js
       //   if (typeof node.props?.[propName] !== 'function') return;
 
       var payload: [String: Any] = [:]
@@ -56,5 +59,9 @@ class Events {
 
       return event
     }
+  }
+
+  deinit {
+   NSEvent.removeMonitor(Events.monitor)
   }
 }

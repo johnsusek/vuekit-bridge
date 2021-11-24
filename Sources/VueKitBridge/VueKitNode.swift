@@ -49,6 +49,11 @@ enum DelegateHandlerError: Error {
 
     VueKitNode.Nodes[instance] = self
 
+    // Keep ARC reference to props so that they aren't deallocated
+    // In theory if these are available in the JS object graph they shouldn't
+    // be deallocated, but they seem to disappear anyways.
+    // Should re-visit this and perhaps try adding props directly to globalThis
+    // so we don't have to do this in Swift
     BridgeTender.current.context.virtualMachine.addManagedReference(self.props, withOwner: self)
 
     if let control = instance as? NSControl {
@@ -56,6 +61,8 @@ enum DelegateHandlerError: Error {
       control.action = #selector(self.action)
     }
 
+    // TODO: set delegate to a JS object, will fns be called there?
+    // (export a JS object that respondsTo everything?)
     if let textField = instance as? NSTextField {
       delegate = TextFieldDelegate(node: self)
       textField.delegate = delegate as? NSTextFieldDelegate

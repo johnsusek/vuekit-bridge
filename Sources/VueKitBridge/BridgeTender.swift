@@ -6,7 +6,7 @@ public class BridgeTender {
   let context: JSContext!
 
   public init(context: JSContext) {
-    print("[bridge] ⟁ VueKit bridge starting...")
+    NSLog("[bridge] ⟁ VueKit bridge starting...")
 
     self.context = context
     BridgeTender.current = self
@@ -20,13 +20,12 @@ public class BridgeTender {
     let polyfills = PolyFills(context: context)
     polyfills.install()
 
-    let events = Events()
-    events.startMonitoring()
+    Events.startMonitoring()
   }
 
   public func loadJSBundle() {
     guard let bundleUrl = Bundle.main.url(forResource: "vuekit-bundle.es", withExtension: "js") else {
-      print("Could not find bundle js at app bundle root. Please run `npm run build:vue`")
+      NSLog("Could not find bundle js at app bundle root. Please run `npm run build:vue`")
       NSApp.terminate(self)
       return
     }
@@ -41,7 +40,7 @@ public class BridgeTender {
 
   class func contextExceptionHandler(_: JSContext?, value: JSValue?) {
     guard let exception = value else {
-      print("[bridge:error] JS Exception: nil")
+      NSLog("[bridge:error] JS Exception: nil")
       return
     }
 
@@ -49,11 +48,11 @@ public class BridgeTender {
     let message = exception.objectForKeyedSubscript("message").toString() ?? " "
     let moreInfo = "\(name): \(message)"
 
-    print("[bridge:error] \(moreInfo)")
+    NSLog("[bridge:error] \(moreInfo)")
   }
 
   class func uncaughtExceptionHandler(_ exception: NSException) {
     let stack = exception.callStackReturnAddresses
-    print("[bridge:error] \(exception): \(stack)")
+    NSLog("[bridge:error] \(exception): \(stack)")
   }
 }
