@@ -4,22 +4,18 @@ class TableViewDelegate: JSDelegate, NSTableViewDelegate, NSTableViewDataSource 
   override var viewName: String { "tableView" }
 
   func tableViewSelectionDidChange(_ notification: Notification) {
-    let sel = selectorToCallbackName(Selector("tableViewSelectionDidChange:"))
-    try? self.handleDelegateInJS(sel, [notification as Any]) as Any?
+    try? self.handleDelegateInJS("tableViewSelectionDidChange:", [notification as Any]) as Any?
   }
 
   func numberOfRows(in tableView: NSTableView) -> Int {
-    let sel = selectorToCallbackName(Selector("numberOfRowsInTableView:"))
-    return try! self.handleDelegateInJS(sel, [tableView]) as Int
+    return try! self.handleDelegateInJS("numberOfRowsInTableView:", [tableView]) as Int
   }
 
   func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-    let sel = selectorToCallbackName(Selector("tableView:objectValueForTableColumn:row:"))
-    return try? self.handleDelegateInJS(sel, [tableView, tableColumn as Any, row]) as Any?
+    return try? self.handleDelegateInJS("tableView:objectValueForTableColumn:row:", [tableColumn as Any, row, tableView]) as Any?
   }
 
   func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-    let sel = selectorToCallbackName(Selector("tableView:viewForTableColumn:row:"))
-    return try! self.handleDelegateInJS(sel, [tableView, tableColumn as Any, row]) as NSView?
+    return try! self.handleDelegateInJS("tableView:viewForTableColumn:row:", [tableColumn as Any, row, tableView]) as NSView?
   }
 }

@@ -63,15 +63,29 @@ enum DelegateHandlerError: Error {
 
     // TODO: set delegate to a JS object, will fns be called there?
     // (export a JS object that respondsTo everything?)
+
     if let textField = instance as? NSTextField {
       delegate = TextFieldDelegate(node: self)
       textField.delegate = delegate as? NSTextFieldDelegate
     }
-
-    if let tableView = instance as? NSTableView {
+    else if let collectionView = instance as? NSCollectionView {
+      delegate = CollectionViewDelegate(node: self)
+      collectionView.delegate = delegate as? NSCollectionViewDelegate
+      collectionView.dataSource = delegate as? NSCollectionViewDataSource
+    }
+    else if let outlineView = instance as? NSOutlineView {
+      delegate = OutlineViewDelegate(node: self)
+      outlineView.delegate = delegate as? NSOutlineViewDelegate
+      outlineView.dataSource = delegate as? NSOutlineViewDataSource
+    }
+    else if let tableView = instance as? NSTableView {
       delegate = TableViewDelegate(node: self)
       tableView.delegate = delegate as? NSTableViewDelegate
       tableView.dataSource = delegate as? NSTableViewDataSource
+    }
+    else if let browserView = instance as? NSBrowser {
+      delegate = BrowserDelegate(node: self)
+      browserView.delegate = delegate as? NSBrowserDelegate
     }
   }
 

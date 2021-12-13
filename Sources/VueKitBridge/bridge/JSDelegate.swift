@@ -12,8 +12,7 @@ class JSDelegate: NSObject {
 
   override func responds(to aSelector: Selector) -> Bool {
     let selector = String(describing: aSelector)
-    let callbackName = selectorToCallbackName(aSelector)
-
+    let callbackName = selectorToCallbackName(selector)
     let selectorParts = selector.split(separator: ":")
 
     // Never respond to private selectors (that start with an underscore)
@@ -27,6 +26,7 @@ class JSDelegate: NSObject {
     }
 
     if (!responds) {
+      // NSLog("[bridge:delegate] No callback \(callbackName) for (\(selector))")
       return false
     }
 
@@ -54,10 +54,12 @@ class JSDelegate: NSObject {
 
     // Need to reference `self` as an argument, or else
     // callJSDelegate is never called (weak v strong self ref?)
-    return fn.call(withArguments: args + [self.node, self] )
+    let res = fn.call(withArguments: args + [self.node, self] )
+
+    return res;
   }
 
-  func handleDelegateInJS<T>(_ delegatePropName: String, _ args: [Any]) throws -> T {
+  func handleDelegateInJS<T>(_ selector: String, _ args: [Any]) throws -> T {
     // This is a force-try, ultimately, because it is unknowable what to return
     // from unimplemented-in-js delegates. Working backwards from this fact, we must throw
     // in our VueKitNode delegate extension functions, since we can't know what to return.
@@ -71,18 +73,18 @@ class JSDelegate: NSObject {
     // because responds(to:) will check the node props for a js implementation of the delegate fn,
     // before allowing the objc runtime to send us these delegate selectors.
 
-    let res = try! self.callJSDelegate(delegatePropName, args)
+    let delegatePropName = selectorToCallbackName(selector)
 
-    // NSLog("[bridge:delegate] Responded \(delegatePropName):", res!)
+    // NSLog("[bridge:delegate] Calling \(delegatePropName)")
+
+    let res = try! self.callJSDelegate(delegatePropName, args)
 
     return res!.toObject() as! T
   }
 
-  func selectorToCallbackName(_ sel: Selector) -> String {
+  func selectorToCallbackName(_ sel: String) -> String {
     var selString = String(describing: sel)
     let capitalizedViewName = self.viewName.capitalizingFirstLetter()
-
-    // TODO: refactor to a selString -> callbackName fn
 
     if (selString.hasSuffix("In" + capitalizedViewName + ":")) {
       selString = selString.replacingOccurrences(of: "In" + capitalizedViewName + ":", with: "")
@@ -103,12 +105,11 @@ class JSDelegate: NSObject {
     let selector = "on" + selString
       .split(separator: ":")
       .enumerated()
-      .filter { i,a in
-        return !(a == self.viewName && i == 0)
+      .filter { idx, name in
+        return !(name == self.viewName && idx == 0)
       }
       .map { String($0.element).capitalizingFirstLetter() }
       .joined()
-
 
     return selector
   }

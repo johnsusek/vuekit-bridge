@@ -28,11 +28,12 @@ class Registration {
 
     for (_, classes): (String, JSON) in frameworks {
       for (_, className) in classes {
-        _ = context.bridgeClass("\(className)");
+        _ = context.bridgeClass("\(className)")
       }
     }
 
     context.setObject(DispatchQueue.self, forKeyedSubscript: "DispatchQueue" as (NSCopying & NSObjectProtocol)?)
+
     _ = context.bridgeClass("VueKitNode");
   }
 }

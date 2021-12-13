@@ -62,6 +62,8 @@ class Events {
   }
 
   deinit {
-   NSEvent.removeMonitor(Events.monitor)
+    if (Events.monitor != nil) {
+      NSEvent.removeMonitor(Events.monitor!)
+    }
   }
 }
